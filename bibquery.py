@@ -304,7 +304,7 @@ def prepare_feedback(data):
 # Filters
 ################################################
 
-def simple_filter(queries, scope, wf):
+def simple_filter(query, scope, wf):
     """Search through BibDesk items"""
     queries = querify(query)
     data = read_cachedir()
