@@ -80,6 +80,7 @@ def read_cachedir():
     for bib in os.listdir(BIB_DIR):
         bib_path = os.path.join(BIB_DIR, bib)
         with open(bib_path, 'rb') as _file:
+            #print _file.read(8) == b"bplist00"
             bib_data = ccl_bplist.load(_file)
             _file.close()
         _data.append(bib_data)
@@ -227,7 +228,7 @@ def info_format(_item):
         except KeyError:
             title_final = 'xxx.'
 
-    return [creator_ref, date_final, title_final]
+    return [date_final, creator_ref, title_final]
 
 def prepare_attachments(_item):
     """Get path to pdf attachments"""
@@ -436,11 +437,11 @@ def filter(query, scope, wf):
 ################################################
 
 def main(wf):
-    queries = wf.args[0] # 'epicur'
-    scope = wf.args[1] # 'in-keyword'
+    queries = wf.args[0]  
+    scope = wf.args[1]
 
     filter(queries, scope, wf)
-    
+    #read_cachedir()
     # LIST = [u'kMDItemWhereFroms', u'kMDItemAuthors', u'kMDItemKeywords']
     # STR = FileAlias
     # UNICODE = [u'net_sourceforge_bibdesk_citekey', u'kMDItemCreator', 
