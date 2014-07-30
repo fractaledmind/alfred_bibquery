@@ -159,7 +159,7 @@ def _background(stdin='/dev/null', stdout='/dev/null',
         pid = os.fork()
         if pid > 0:
             sys.exit(0)  # Exit first parent.
-    except OSError as e:
+    except OSError, e:
         log.critical("fork #1 failed: (%d) %s\n" % (e.errno, e.strerror))
         sys.exit(1)
     # Decouple from parent environment.
@@ -171,7 +171,7 @@ def _background(stdin='/dev/null', stdout='/dev/null',
         pid = os.fork()
         if pid > 0:
             sys.exit(0)  # Exit second parent.
-    except OSError as e:
+    except OSError, e:
         log.critical("fork #2 failed: (%d) %s\n" % (e.errno, e.strerror))
         sys.exit(1)
     # Now I am a daemon!
@@ -201,7 +201,7 @@ def run_in_background(name, args, **kwargs):
     """
 
     if is_running(name):
-        log.info('Task `{}` is already running'.format(name))
+        log.info('Task `{}` is already running')
         return
 
     argcache = _arg_cache(name)
@@ -211,9 +211,7 @@ def run_in_background(name, args, **kwargs):
         pickle.dump({'args': args, 'kwargs': kwargs}, file)
 
     # Call this script
-    cmd = ['/usr/bin/python', __file__, name]
-    log.debug('Calling {!r} ...'.format(cmd))
-    retcode = subprocess.call(cmd)
+    retcode = subprocess.call(['/usr/bin/python', __file__, name])
     if retcode:  # pragma: no cover
         log.error('Failed to call task in background')
     else:
